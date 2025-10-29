@@ -8,6 +8,11 @@ const props = defineProps<{
   media: MediaType
 }>()
 
+const emit = defineEmits<{
+  'add-media': [media: MediaType]
+  'remove-media': [mediaId: number]
+}>()
+
 const store = useMediaStore()
 
 const alreadyAdded = computed(() => store.mediaList.some((media) => media.Id === props.media.Id))
@@ -48,7 +53,7 @@ const alreadyAdded = computed(() => store.mediaList.some((media) => media.Id ===
           v-motion-fade-visible-once
           v-if="!alreadyAdded"
           class="btn btn-sm px-4 bg-linear-to-r from-gray-100 to-gray-200 border border-gray-300 text-gray-700 hover:from-gray-200 hover:to-gray-300 hover:text-gray-900 transition"
-          @click="store.addMedia(props.media)"
+          @click="$emit('add-media', props.media)"
         >
           Add
         </button>
@@ -56,7 +61,7 @@ const alreadyAdded = computed(() => store.mediaList.some((media) => media.Id ===
           v-motion-fade-visible-once
           v-else
           class="btn btn-sm px-4 bg-linear-to-r from-red-50 to-red-100 border border-red-200 text-red-600 hover:from-red-100 hover:to-red-200 hover:text-red-700 transition"
-          @click="store.removeMedia(props.media.Id)"
+          @click="$emit('remove-media', props.media.Id)"
         >
           Remove
         </button>

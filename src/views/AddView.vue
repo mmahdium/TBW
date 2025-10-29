@@ -5,7 +5,7 @@ import SearchBar from '@/components/SearchBar.vue'
 import MediaList from '@/components/MediaList.vue'
 import type { MediaType } from '@/types/Media'
 import ErrorAlert from '@/components/alerts/ErrorAlert.vue'
-import { useSearchPageStore } from '@/stores/media'
+import { useSearchPageStore, useMediaStore } from '@/stores/media'
 
 const medias = ref<MediaType[]>()
 const seachError = ref<string>('')
@@ -15,6 +15,15 @@ const isSearching = ref(false)
 const isLoadingMore = ref(false)
 
 const state = useSearchPageStore()
+const store = useMediaStore()
+
+const handleAddMedia = (media: MediaType) => {
+  store.addMedia(media)
+}
+
+const handleRemoveMedia = (mediaId: number) => {
+  store.removeMedia(mediaId)
+}
 
 async function searchMovie() {
   try {
@@ -108,6 +117,8 @@ watch(searchQuery, () => {
       :loading-more="isLoadingMore"
       @loadMore="loadMore"
       :is-search="true"
+      @add-media="handleAddMedia"
+      @remove-media="handleRemoveMedia"
     />
 
     <!-- Empty state -->

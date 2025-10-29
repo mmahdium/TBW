@@ -9,7 +9,12 @@ const props = defineProps<{
   isSearch: boolean
 }>()
 
-const emit = defineEmits<{ (e: 'loaded', id: string): void; (e: 'loadMore'): void }>()
+const emit = defineEmits<{ 
+  (e: 'loaded', id: string): void; 
+  (e: 'loadMore'): void;
+  (e: 'add-media', media: MediaType): void;
+  (e: 'remove-media', mediaId: number): void;
+}>()
 </script>
 
 <template>
@@ -30,7 +35,11 @@ const emit = defineEmits<{ (e: 'loaded', id: string): void; (e: 'loadMore'): voi
       class="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5"
     >
       <li v-for="media in props.medias" :key="media.Id" v-auto-animate>
-        <MediaCard :media="media" />
+        <MediaCard 
+          :media="media" 
+          @add-media="$emit('add-media', $event)"
+          @remove-media="$emit('remove-media', $event)"
+        />
       </li>
       <li v-if="!props.isSearch">
         <AddMoreCard />

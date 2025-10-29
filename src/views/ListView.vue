@@ -1,8 +1,17 @@
 <script setup lang="ts">
 import { useMediaStore } from '@/stores/media'
 import MediaList from '@/components/MediaList.vue'
+import type { MediaType } from '@/types/Media'
 
 const store = useMediaStore()
+
+const handleAddMedia = (media: MediaType) => {
+  store.addMedia(media)
+}
+
+const handleRemoveMedia = (mediaId: number) => {
+  store.removeMedia(mediaId)
+}
 </script>
 
 <template>
@@ -18,6 +27,8 @@ const store = useMediaStore()
       :medias="store.mediaList"
       :loading-more="false"
       :is-search="false"
+      @add-media="handleAddMedia"
+      @remove-media="handleRemoveMedia"
     />
   </div>
 </template>
