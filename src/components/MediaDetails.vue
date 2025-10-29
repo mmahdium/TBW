@@ -2,7 +2,7 @@
 import type { MovieDetailsType } from '@/types/Movie'
 import type { TvSeriesDetailsType } from '@/types/TvSeries'
 import { computed, ref } from 'vue'
-import { useMediaStore } from '@/stores/movies'
+import { useMediaStore } from '@/stores/media'
 import type { MediaType } from '@/types/Media'
 
 const props = defineProps<{

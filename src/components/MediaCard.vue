@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useMediaStore } from '@/stores/movies'
+import { useMediaStore } from '@/stores/media'
 import { computed, ref } from 'vue'
 import type { MediaType } from '@/types/Media'
 

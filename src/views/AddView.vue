@@ -2,10 +2,10 @@
 import { loadMoreMovies, searchMovies } from '@/lib/api'
 import { onMounted, ref, watch } from 'vue'
 import SearchBar from '@/components/SearchBar.vue'
-import MovieList from '@/components/MovieList.vue'
+import MediaList from '@/components/MediaList.vue'
 import type { MediaType } from '@/types/Media'
 import ErrorAlert from '@/components/alerts/ErrorAlert.vue'
-import { useSearchPageStore } from '@/stores/movies'
+import { useSearchPageStore } from '@/stores/media'
 
 const movies = ref<MediaType[]>()
 const seachError = ref<string>('')
@@ -102,9 +102,9 @@ watch(searchQuery, () => {
     </div>
 
     <!-- Movie list -->
-    <MovieList
+    <MediaList
       v-else-if="movies && movies.length > 0"
-      :movies="movies"
+      :medias="movies"
       :loading-more="isLoadingMore"
       @loadMore="loadMore"
       :is-search="true"
