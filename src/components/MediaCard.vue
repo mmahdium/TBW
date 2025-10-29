@@ -1,24 +1,16 @@
 <script setup lang="ts">
 import { useMediaStore } from '@/stores/media'
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import type { MediaType } from '@/types/Media'
+import ImageWithFallback from './ImageWithFallback.vue'
 
 const props = defineProps<{
   media: MediaType
 }>()
 
 const store = useMediaStore()
-const imageLoadFailed = ref(false)
-const loaded = ref(false)
 
 const alreadyAdded = computed(() => store.mediaList.some((media) => media.Id === props.media.Id))
-
-const imageSource = computed(() => {
-  if (!props.media.PosterPath) {
-    return ''
-  }
-  return `https://image.tmdb.org/t/p/w300${props.media.PosterPath}`
-})
 </script>
 
 <template>
@@ -30,40 +22,12 @@ const imageSource = computed(() => {
     <router-link
       :to="{ name: 'details', params: { type: props.media.MediaType, id: props.media.Id } }"
     >
-      <figure class="overflow-hidden flex items-center justify-center aspect-2/3 bg-gray-50">
-        <span v-if="!loaded" class="loading loading-ring loading-lg text-primary"></span>
-
-        <div v-else-if="imageLoadFailed" class="flex items-center justify-center">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-12 h-12 text-gray-300"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"
-            />
-          </svg>
-        </div>
-
-        <img
-          v-show="loaded && !imageLoadFailed"
-          :src="imageSource"
-          :alt="props.media.Title"
-          class="object-cover w-full h-full transform transition-transform duration-500 hover:scale-105"
-          @load="loaded = true"
-          @error="
-            () => {
-              imageLoadFailed = true
-              loaded = true
-            }
-          "
-        />
-      </figure>
+      <ImageWithFallback
+        :src="props.media.PosterPath"
+        :alt="props.media.Title"
+        size="w300"
+        class="aspect-2/3 object-cover w-full h-full transform transition-transform duration-500 hover:scale-105"
+      />
     </router-link>
 
     <!-- Body -->

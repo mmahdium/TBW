@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import type { MovieDetailsType } from '@/types/Movie'
 import type { TvSeriesDetailsType } from '@/types/TvSeries'
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { useMediaStore } from '@/stores/media'
 import type { MediaType } from '@/types/Media'
+import ImageWithFallback from './ImageWithFallback.vue'
+import MediaTypeBadge from './MediaTypeBadge.vue'
 
 const props = defineProps<{
   type: 'movie' | 'tv'
@@ -12,7 +14,6 @@ const props = defineProps<{
   tvSeries?: TvSeriesDetailsType | null
 }>()
 
-const imageLoaded = ref(false)
 const store = useMediaStore()
 
 const alreadyAdded = computed(() =>
@@ -37,20 +38,16 @@ const alreadyAdded = computed(() =>
     v-motion-fade-visible-once
   >
     <!-- Poster -->
-    <figure class="shrink-0">
-      <span v-if="!imageLoaded" class="loading loading-ring loading-lg text-primary"></span>
-      <img
-        v-show="imageLoaded"
-        :src="
-          type === 'movie'
-            ? 'https://image.tmdb.org/t/p/w500' + props.movie!.PosterPath
-            : 'https://image.tmdb.org/t/p/w500' + props.tvSeries!.PosterPath
-        "
-        alt="Poster"
-        class="w-full max-w-sm rounded-lg shadow-lg transform transition-transform duration-500 hover:scale-105"
-        @load="imageLoaded = true"
-      />
-    </figure>
+    <ImageWithFallback
+      :src="
+        type === 'movie'
+          ? props.movie!.PosterPath
+          : props.tvSeries!.PosterPath
+      "
+      alt="Poster"
+      size="w500"
+      class="shrink-0 w-full max-w-sm rounded-lg shadow-lg transform transition-transform duration-500 hover:scale-105"
+    />
 
     <!-- Text -->
     <div class="flex-1">
@@ -82,25 +79,19 @@ const alreadyAdded = computed(() =>
 
       <!-- Badges -->
       <div class="flex flex-wrap gap-2 mb-6">
-        <span
+        <MediaTypeBadge
           v-for="g in props.type === 'movie' ? props.movie!.Genres : props.tvSeries!.Genres"
           :key="g.id"
-          class="px-3 py-1 rounded-md text-sm bg-linear-to-r from-gray-100 to-gray-200 text-gray-700 border border-gray-300"
-        >
-          {{ g.name }}
-        </span>
-        <span
+          :text="g.name"
+        />
+        <MediaTypeBadge
           v-if="props.type === 'movie'"
-          class="px-3 py-1 rounded-md text-sm bg-linear-to-r from-gray-100 to-gray-200 text-gray-700 border border-gray-300"
-        >
-          Runtime: {{ props.movie!.Runtime }} min
-        </span>
-        <span
+          :text="`Runtime: ${props.movie!.Runtime} min`"
+        />
+        <MediaTypeBadge
           v-if="props.type === 'tv'"
-          class="px-3 py-1 rounded-md text-sm bg-linear-to-r from-gray-100 to-gray-200 text-gray-700 border border-gray-300"
-        >
-          Seasons: {{ props.tvSeries!.NumberOfSeasons }}
-        </span>
+          :text="`Seasons: ${props.tvSeries!.NumberOfSeasons}`"
+        />
       </div>
 
       <!-- Actions -->
