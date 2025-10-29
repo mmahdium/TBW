@@ -29,8 +29,8 @@ const emit = defineEmits<{ (e: 'loaded', id: string): void; (e: 'loadMore'): voi
       v-else
       class="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5"
     >
-      <li v-for="movie in props.medias" :key="movie.Id" v-auto-animate>
-        <MediaCard :movie="movie" />
+      <li v-for="media in props.medias" :key="media.Id" v-auto-animate>
+        <MediaCard :media="media" />
       </li>
       <li v-if="!props.isSearch">
         <AddMoreCard />

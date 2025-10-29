@@ -115,7 +115,7 @@ watch(searchQuery, () => {
       v-else
       class="text-center text-gray-500 mt-16 bg-gray-50/60 border border-gray-200 rounded-lg py-12"
     >
-      Search for a movie to add it to your list
+      Search for a movie or TV Serie to add it to your list
     </p>
 
     <!-- Error alert -->
