@@ -9,7 +9,7 @@
       </h1>
 
       <p class="text-lg text-gray-600 max-w-2xl mb-12">
-        A simple and beautiful movie list app built with Vue&nbsp;3 and Tailwind&nbsp;CSS (daisyUI).
+        A simple and beautiful media list app built with Vue&nbsp;3 and Tailwind&nbsp;CSS (daisyUI).
       </p>
 
       <RouterLink

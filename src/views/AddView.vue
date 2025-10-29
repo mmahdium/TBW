@@ -7,7 +7,7 @@ import type { MediaType } from '@/types/Media'
 import ErrorAlert from '@/components/alerts/ErrorAlert.vue'
 import { useSearchPageStore } from '@/stores/media'
 
-const movies = ref<MediaType[]>()
+const medias = ref<MediaType[]>()
 const seachError = ref<string>('')
 const searchQuery = ref('')
 const searchPage = ref(1)
@@ -23,16 +23,16 @@ async function searchMovie() {
     const result = await searchMovies(searchQuery.value)
     console.log(result)
     if (result.totalResults === 0) {
-      movies.value = []
+      medias.value = []
       seachError.value = 'No results found'
       return
     }
     seachError.value = ''
-    movies.value = result.Results
+    medias.value = result.Results
 
     state.setState(searchPage.value, searchQuery.value, result.Results)
   } catch (error) {
-    movies.value = []
+    medias.value = []
     console.error(error)
     seachError.value = (error as Error).message
   } finally {
@@ -45,8 +45,8 @@ async function loadMore() {
     isLoadingMore.value = true
     searchPage.value++
     const result = await loadMoreMovies(searchQuery.value, searchPage.value)
-    movies.value?.push(...result.Results)
-    state.setState(searchPage.value, searchQuery.value, movies.value ? movies.value : [])
+    medias.value?.push(...result.Results)
+    state.setState(searchPage.value, searchQuery.value, medias.value ? medias.value : [])
   } catch (error) {
     searchPage.value = 1
     seachError.value = (error as Error).message
@@ -64,7 +64,7 @@ onMounted(() => {
   ) {
     searchQuery.value = state.searchQuery
     searchPage.value = state.searchPage
-    movies.value = state.mediaList
+    medias.value = state.mediaList
   }
 })
 
@@ -90,7 +90,7 @@ watch(searchQuery, () => {
     <h1
       class="text-4xl font-extrabold text-center mb-10 bg-linear-to-r from-gray-700 to-gray-500 bg-clip-text text-transparent"
     >
-      Add a Movie
+      Add Media
     </h1>
 
     <!-- Search bar -->
@@ -103,8 +103,8 @@ watch(searchQuery, () => {
 
     <!-- Movie list -->
     <MediaList
-      v-else-if="movies && movies.length > 0"
-      :medias="movies"
+      v-else-if="medias && medias.length > 0"
+      :medias="medias"
       :loading-more="isLoadingMore"
       @loadMore="loadMore"
       :is-search="true"

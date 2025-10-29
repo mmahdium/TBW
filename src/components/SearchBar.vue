@@ -37,7 +37,7 @@ function onSubmit() {
       <!-- Input -->
       <input
         type="search"
-        placeholder="Search for a movie"
+        placeholder="Search for media"
         required
         :value="props.modelValue"
         @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)"

@@ -3,8 +3,8 @@ import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
-const movieId = ref(route.params.id as string)
-const movieName = ref(route.params.name as string)
+const mediaId = ref(route.params.id as string)
+const mediaName = ref(route.params.name as string)
 const isLoaded = ref(false)
 </script>
 
@@ -19,7 +19,7 @@ const isLoaded = ref(false)
         <h1 class="text-3xl font-bold text-gray-700">
           Watch <br />
           <span class="bg-linear-to-r from-indigo-500 to-cyan-400 bg-clip-text text-transparent">
-            {{ movieName }}
+            {{ mediaName }}
           </span>
         </h1>
         <span class="badge badge-warning">Experimental</span>
@@ -33,7 +33,7 @@ const isLoaded = ref(false)
       <!-- Responsive iframe -->
       <div v-show="isLoaded" class="w-full aspect-video rounded-lg overflow-hidden shadow-lg">
         <iframe
-          :src="'https://vidlink.pro/movie/' + movieId + '?autoplay=true&title=false'"
+          :src="'https://vidlink.pro/movie/' + mediaId + '?autoplay=true&title=false'"
           frameborder="0"
           allowfullscreen
           class="w-full h-full"

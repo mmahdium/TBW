@@ -10,7 +10,7 @@ const store = useMediaStore()
     <h1
       class="text-4xl font-extrabold text-center mb-10 bg-linear-to-r from-gray-700 to-gray-500 bg-clip-text text-transparent"
     >
-      Movie Library
+      Media Library
     </h1>
     <MediaList
       v-auto-animate
