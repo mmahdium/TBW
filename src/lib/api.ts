@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { MediaResponseType } from '@/types/Media'
 import { mapMedia } from '@/types/MediaMap'
 import type { MovieDetailsType } from '@/types/Movie'
 import { mapMovieDetails } from '@/types/MovieMap'
+import type { SearchFilters } from '@/types/SearchFilters'
 import type { TvSeriesDetailsType } from '@/types/TvSeries'
 import { mapTvSeriesDetails } from '@/types/TvSeriesMap'
 import axios from 'axios'
@@ -18,86 +20,99 @@ const instance = axios.create({
   },
 })
 
-export const searchMovies = async (query: string): Promise<MediaResponseType> => {
-  const [movieSearch, tvSearch] = await Promise.all([
-    instance.get(`/search/movie`, {
-      params: {
-        query: query,
-        include_adult: true,
-      },
-    }),
-    instance.get(`/search/tv`, {
-      params: {
-        query: query,
-        include_adult: true,
-      },
-    }),
-  ])
+export const loadMedia = async (
+  query: string,
+  page = 1,
+  filters: SearchFilters,
+): Promise<MediaResponseType> => {
+  const params = {
+    query,
+    include_adult: filters.includeAdult || false,
+    page,
+  }
+  const requests: Promise<any>[] = []
+  if (filters.onlyMovies) {
+    requests.push(instance.get(`/search/movie`, { params }))
+  }
+  if (filters.onlySeries) {
+    requests.push(instance.get(`/search/tv`, { params }))
+  }
 
-  const movieData = movieSearch.data
-  const tvData = tvSearch.data
+  const responses = await Promise.all(requests)
 
+  // If only one type was requested, handle that directly
+  if (filters.onlyMovies) {
+    const movieSearch = responses[0]
+    if (movieSearch.status !== 200) {
+      return {
+        Results: [],
+        Page: 0,
+        totalResults: 0,
+        totalPages: 0,
+        ErrorMessage: movieSearch.data.Error,
+      }
+    }
+    const movies = movieSearch.data.results.map((r: any) => mapMedia({ ...r, media_type: 'movie' }))
+    return {
+      Results: movies,
+      Page: movieSearch.data.page,
+      totalResults: movieSearch.data.total_results,
+      totalPages: movieSearch.data.total_pages,
+      ErrorMessage: '',
+    }
+  }
+
+  if (filters.onlySeries) {
+    const tvSearch = responses[0]
+    if (tvSearch.status !== 200) {
+      return {
+        Results: [],
+        Page: 0,
+        totalResults: 0,
+        totalPages: 0,
+        ErrorMessage: tvSearch.data.Error,
+      }
+    }
+    const tv = tvSearch.data.results.map((r: any) => mapMedia({ ...r, media_type: 'tv' }))
+    return {
+      Results: tv,
+      Page: tvSearch.data.page,
+      totalResults: tvSearch.data.total_results,
+      totalPages: tvSearch.data.total_pages,
+      ErrorMessage: '',
+    }
+  }
+
+  // Otherwise, both
+  const [movieSearch, tvSearch] = responses
   if (movieSearch.status !== 200 || tvSearch.status !== 200) {
     return {
       Results: [],
       Page: 0,
       totalResults: 0,
       totalPages: 0,
-      ErrorMessage: movieSearch.data.Error || tvSearch.data.Error,
+      ErrorMessage: movieSearch?.data?.Error || tvSearch?.data?.Error,
     }
   }
 
-  const filteredMovies = movieData.results.map((result: { media_type: string }) => {
-    return { ...result, media_type: 'movie' }
-  })
+  const filteredMovies = movieSearch.data.results.map((r: any) =>
+    mapMedia({ ...r, media_type: 'movie' }),
+  )
+  const filteredTV = tvSearch.data.results.map((r: any) => mapMedia({ ...r, media_type: 'tv' }))
 
-  const filteredTV = tvData.results.map((result: { media_type: string }) => {
-    return { ...result, media_type: 'tv' }
-  })
+  const res: any[] = []
+  for (let i = 0; i < Math.max(filteredMovies.length, filteredTV.length); i++) {
+    if (i < filteredMovies.length) res.push(filteredMovies[i])
+    if (i < filteredTV.length) res.push(filteredTV[i])
+  }
 
-  const data: MediaResponseType = {
-    Results: [...filteredMovies.map(mapMedia), ...filteredTV.map(mapMedia)],
-    Page: Math.max(movieData.page, tvData.page),
-    totalResults: movieData.total_results + tvData.total_results,
-    totalPages: Math.max(movieData.total_pages, tvData.total_pages),
+  return {
+    Results: res,
+    Page: Math.max(movieSearch.data.page, tvSearch.data.page),
+    totalResults: movieSearch.data.total_results + tvSearch.data.total_results,
+    totalPages: Math.max(movieSearch.data.total_pages, tvSearch.data.total_pages),
     ErrorMessage: '',
   }
-
-  return data
-}
-
-export const loadMoreMovies = async (query: string, page: number): Promise<MediaResponseType> => {
-  const response = await instance.get(`/search/multi`, {
-    params: {
-      query: query,
-      include_adult: true,
-      page: page,
-    },
-  })
-
-  if (response.status !== 200) {
-    return {
-      Results: [],
-      Page: 0,
-      totalResults: 0,
-      totalPages: 0,
-      ErrorMessage: response.data.Error,
-    }
-  }
-
-  const filtered = response.data.results.filter((result: { media_type: string }) => {
-    return result.media_type === 'movie' || result.media_type === 'tv'
-  })
-
-  const data: MediaResponseType = {
-    Results: filtered.map(mapMedia),
-    Page: response.data.page,
-    totalResults: response.data.total_results,
-    totalPages: response.data.total_pages,
-    ErrorMessage: '',
-  }
-
-  return data
 }
 
 export const getMovieDetails = async (id: string): Promise<MovieDetailsType | null> => {

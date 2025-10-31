@@ -13,7 +13,7 @@ function onSubmit() {
 </script>
 
 <template>
-  <form @submit.prevent="onSubmit" class="flex justify-center mb-8">
+  <form @submit.prevent="onSubmit" class="flex justify-center mb-3">
     <div
       class="flex items-center w-full max-w-md bg-white/70 backdrop-blur-md border border-gray-200/60 shadow-sm hover:shadow-md transition rounded-lg overflow-hidden"
     >

@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { loadMoreMovies, searchMovies } from '@/lib/api'
+import { loadMedia } from '@/lib/api'
 import { onMounted, ref, watch } from 'vue'
 import SearchBar from '@/components/SearchBar.vue'
 import MediaList from '@/components/MediaList.vue'
 import type { MediaType } from '@/types/Media'
 import ErrorAlert from '@/components/alerts/ErrorAlert.vue'
 import { useSearchPageStore, useMediaStore } from '@/stores/media'
+import MediaFilters from '@/components/MediaFilters.vue'
+import type { SearchFilters } from '@/types/SearchFilters'
 
 const medias = ref<MediaType[]>()
 const seachError = ref<string>('')
@@ -16,6 +18,11 @@ const isLoadingMore = ref(false)
 
 const state = useSearchPageStore()
 const store = useMediaStore()
+const filters = ref<SearchFilters>({
+  includeAdult: false,
+  onlyMovies: true,
+  onlySeries: false,
+})
 
 const handleAddMedia = (media: MediaType) => {
   store.addMedia(media)
@@ -29,7 +36,7 @@ async function searchMovie() {
   try {
     isSearching.value = true
     searchPage.value = 1
-    const result = await searchMovies(searchQuery.value)
+    const result = await loadMedia(searchQuery.value, searchPage.value, filters.value)
     console.log(result)
     if (result.totalResults === 0) {
       medias.value = []
@@ -53,7 +60,7 @@ async function loadMore() {
   try {
     isLoadingMore.value = true
     searchPage.value++
-    const result = await loadMoreMovies(searchQuery.value, searchPage.value)
+    const result = await loadMedia(searchQuery.value, searchPage.value, filters.value)
     medias.value?.push(...result.Results)
     state.setState(searchPage.value, searchQuery.value, medias.value ? medias.value : [])
   } catch (error) {
@@ -91,6 +98,12 @@ watch(searchQuery, () => {
     timeoutId = null
   }, 500)
 })
+
+watch(filters, () => {
+  if (searchQuery.value.length > 2) {
+    searchMovie()
+  }
+})
 </script>
 
 <template>
@@ -104,6 +117,8 @@ watch(searchQuery, () => {
 
     <!-- Search bar -->
     <SearchBar v-model="searchQuery" @submit="searchMovie" />
+
+    <MediaFilters @update:filters="(f) => (filters = f)" />
 
     <!-- Loading spinner -->
     <div v-if="isSearching" class="flex justify-center my-16">
