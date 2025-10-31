@@ -1,6 +1,7 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import type { MediaType } from '@/types/Media'
+import type { SearchFilters } from '@/types/SearchFilters'
 
 function saveMedias(medias: MediaType[]) {
   localStorage.setItem('medias', JSON.stringify(medias))
@@ -33,11 +34,14 @@ export const useSearchPageStore = defineStore('searchPage', () => {
   const mediaList = ref<MediaType[]>()
   const searchPage = ref(0)
   const searchQuery = ref('')
+  const searchFilters = ref<SearchFilters>()
 
-  function setState(page: number, query: string, medias: MediaType[]) {
+  function setState(page: number, query: string, medias: MediaType[], filters: SearchFilters) {
     searchPage.value = page
     searchQuery.value = query
     mediaList.value = medias
+    searchFilters.value = filters
+    console.log('setState', page, query, medias, filters)
   }
-  return { searchPage, searchQuery, mediaList, setState }
+  return { searchPage, searchQuery, mediaList, searchFilters, setState }
 })
