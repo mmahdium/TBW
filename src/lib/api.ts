@@ -19,32 +19,47 @@ const instance = axios.create({
 })
 
 export const searchMovies = async (query: string): Promise<MediaResponseType> => {
-  const response = await instance.get(`/search/multi`, {
-    params: {
-      query: query,
-      include_adult: true,
-    },
-  })
+  const [movieSearch, tvSearch] = await Promise.all([
+    instance.get(`/search/movie`, {
+      params: {
+        query: query,
+        include_adult: true,
+      },
+    }),
+    instance.get(`/search/tv`, {
+      params: {
+        query: query,
+        include_adult: true,
+      },
+    }),
+  ])
 
-  if (response.status !== 200) {
+  const movieData = movieSearch.data
+  const tvData = tvSearch.data
+
+  if (movieSearch.status !== 200 || tvSearch.status !== 200) {
     return {
       Results: [],
       Page: 0,
       totalResults: 0,
       totalPages: 0,
-      ErrorMessage: response.data.Error,
+      ErrorMessage: movieSearch.data.Error || tvSearch.data.Error,
     }
   }
 
-  const filtered = response.data.results.filter((result: { media_type: string }) => {
-    return result.media_type === 'movie' || result.media_type === 'tv'
+  const filteredMovies = movieData.results.map((result: { media_type: string }) => {
+    return { ...result, media_type: 'movie' }
+  })
+
+  const filteredTV = tvData.results.map((result: { media_type: string }) => {
+    return { ...result, media_type: 'tv' }
   })
 
   const data: MediaResponseType = {
-    Results: filtered.map(mapMedia),
-    Page: response.data.page,
-    totalResults: response.data.total_results,
-    totalPages: response.data.total_pages,
+    Results: [...filteredMovies.map(mapMedia), ...filteredTV.map(mapMedia)],
+    Page: Math.max(movieData.page, tvData.page),
+    totalResults: movieData.total_results + tvData.total_results,
+    totalPages: Math.max(movieData.total_pages, tvData.total_pages),
     ErrorMessage: '',
   }
 
