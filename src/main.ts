@@ -15,3 +15,4 @@ app.use(autoAnimatePlugin)
 app.use(MotionPlugin)
 
 app.mount('#app')
+

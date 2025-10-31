@@ -8,12 +8,13 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "run-p type-check \"build-only {@}\" --",
+    "build": "run-p type-check \"build-only {@}\" -- && npm run inject-preloads",
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
     "lint": "eslint . --fix",
-    "format": "prettier --write src/"
+    "format": "prettier --write src/",
+    "inject-preloads": "node scripts/inject-preloads.js"
   },
   "dependencies": {
     "@formkit/auto-animate": "^0.9.0",
