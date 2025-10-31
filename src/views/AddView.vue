@@ -18,10 +18,12 @@ const isLoadingMore = ref(false)
 
 const state = useSearchPageStore()
 const store = useMediaStore()
+
+// Initialize filters with stored values from the state, defaulting to initial values if not available
 const filters = ref<SearchFilters>({
-  includeAdult: false,
-  onlyMovies: true,
-  onlySeries: false,
+  includeAdult: state.searchFilters?.includeAdult ?? false,
+  onlyMovies: state.searchFilters?.onlyMovies ?? true,
+  onlySeries: state.searchFilters?.onlySeries ?? false,
 })
 
 const handleAddMedia = (media: MediaType) => {
@@ -37,7 +39,6 @@ async function searchMovie() {
     isSearching.value = true
     searchPage.value = 1
     const result = await loadMedia(searchQuery.value, searchPage.value, filters.value)
-    console.log(result)
     if (result.totalResults === 0) {
       medias.value = []
       seachError.value = 'No results found'
@@ -46,7 +47,7 @@ async function searchMovie() {
     seachError.value = ''
     medias.value = result.Results
 
-    state.setState(searchPage.value, searchQuery.value, result.Results)
+    state.setState(searchPage.value, searchQuery.value, result.Results, filters.value)
   } catch (error) {
     medias.value = []
     console.error(error)
@@ -62,7 +63,12 @@ async function loadMore() {
     searchPage.value++
     const result = await loadMedia(searchQuery.value, searchPage.value, filters.value)
     medias.value?.push(...result.Results)
-    state.setState(searchPage.value, searchQuery.value, medias.value ? medias.value : [])
+    state.setState(
+      searchPage.value,
+      searchQuery.value,
+      medias.value ? medias.value : [],
+      filters.value,
+    )
   } catch (error) {
     searchPage.value = 1
     seachError.value = (error as Error).message
@@ -101,6 +107,12 @@ watch(searchQuery, () => {
 
 watch(filters, () => {
   if (searchQuery.value.length > 2) {
+    state.setState(
+      searchPage.value,
+      searchQuery.value,
+      medias.value ? medias.value : [],
+      filters.value,
+    )
     searchMovie()
   }
 })
@@ -118,7 +130,7 @@ watch(filters, () => {
     <!-- Search bar -->
     <SearchBar v-model="searchQuery" @submit="searchMovie" />
 
-    <MediaFilters @update:filters="(f) => (filters = f)" />
+    <MediaFilters @update:filters="(f) => (filters = f)" :modelValue="filters" />
 
     <!-- Loading spinner -->
     <div v-if="isSearching" class="flex justify-center my-16">

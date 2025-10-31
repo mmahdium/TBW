@@ -3,7 +3,7 @@ import type { SearchFilters } from '@/types/SearchFilters'
 import { reactive, watch } from 'vue'
 
 const props = defineProps<{
-  modelValue?: SearchFilters // optional initial value
+  modelValue: SearchFilters // optional initial value
 }>()
 
 const emit = defineEmits<{
@@ -11,9 +11,9 @@ const emit = defineEmits<{
 }>()
 
 const local = reactive<SearchFilters>({
-  includeAdult: props.modelValue?.includeAdult ?? false,
-  onlyMovies: props.modelValue?.onlyMovies ?? true,
-  onlySeries: props.modelValue?.onlySeries ?? false,
+  includeAdult: props.modelValue?.includeAdult,
+  onlyMovies: props.modelValue?.onlyMovies,
+  onlySeries: props.modelValue?.onlySeries,
 })
 
 function toggleIncludeAdult(e: Event) {
@@ -33,7 +33,6 @@ function toggleOnlySeries(e: Event) {
   }
   local.onlySeries = checked
 }
-
 
 watch(
   () => ({ ...local }),
