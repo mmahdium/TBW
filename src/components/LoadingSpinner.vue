@@ -6,12 +6,10 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   size: 'md',
-  color: 'primary'
+  color: 'primary',
 })
 </script>
 
 <template>
-  <span 
-    :class="`loading loading-ring loading-${props.size} text-${props.color}`"
-  ></span>
+  <span :class="`loading loading-ring loading-${props.size} text-${props.color}`"></span>
 </template>

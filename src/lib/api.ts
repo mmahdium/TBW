@@ -7,7 +7,7 @@ import { mapTvSeriesDetails } from '@/types/TvSeriesMap'
 import axios from 'axios'
 
 const TMDB_READ_API_KEY =
-  'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzZjY3MDNmM2UyYTBiMmI0MGZlNGZiYjNlMTU0NjI0NCIsIm5iZiI6MTc2MDU3NDcwNi45MjQsInN1YiI6IjY4ZjAzY2YyNGZmNGM0NjI1NmM3N2EyNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.HHReb_7Oue_o1wkgH2mmbCgdMJ8buFfRdCtwQqj_1Us' // I know this should not be here and I dont care
+  'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzZjY3MDNmM2UyYTBiMmI0MGZlNGZiYjNlMTU0NjI0NCIsIm5iZiI6MTc2MDU3NDcwNi45MjQsInN1YiI6IjY4ZjAzY2YyNGZmNGM0NjI1NmM3N2EyNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.HHReb_7Oue_o1wkgH2mmbCgdMJ8buFfRdCtwQqj_1Us' // This is a read only key and I dont see the need for hiding it, ONLY IN THIS PARTICULAR CASE
 
 const instance = axios.create({
   baseURL: 'https://api.themoviedb.org/3',

@@ -8,7 +8,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  size: 'w300'
+  size: 'w300',
 })
 
 const imageLoadFailed = ref(false)

@@ -39,11 +39,7 @@ const alreadyAdded = computed(() =>
   >
     <!-- Poster -->
     <ImageWithFallback
-      :src="
-        type === 'movie'
-          ? props.movie!.PosterPath
-          : props.tvSeries!.PosterPath
-      "
+      :src="type === 'movie' ? props.movie!.PosterPath : props.tvSeries!.PosterPath"
       alt="Poster"
       size="w500"
       class="shrink-0 w-full max-w-sm rounded-lg shadow-lg transform transition-transform duration-500 hover:scale-105"
