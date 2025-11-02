@@ -32,9 +32,13 @@ const emit = defineEmits<{
     <ul
       v-auto-animate
       v-else
-      class="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5"
+      class="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
     >
-      <li v-for="media in props.medias" :key="media.Id" v-auto-animate>
+      <li
+        v-for="media in props.medias.filter((media) => media.PosterPath)"
+        :key="media.Id"
+        v-auto-animate
+      >
         <MediaCard
           :media="media"
           @add-media="$emit('add-media', $event)"

@@ -3,7 +3,7 @@
 <template>
   <router-link
     to="/add"
-    class="card relative w-full h-full flex items-center justify-center aspect-2/3 bg-white/40 backdrop-blur-md border-2 border-dashed border-gray-300 rounded-lg shadow-sm hover:shadow-md hover:border-gray-400 transition-all duration-300"
+    class="card relative w-full h-full flex items-center justify-center aspect-2/3 bg-white/40 backdrop-blur-md rounded-lg transition-all duration-300"
     v-motion-fade-visible-once
   >
     <!-- Plus icon -->
