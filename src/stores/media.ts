@@ -41,7 +41,6 @@ export const useSearchPageStore = defineStore('searchPage', () => {
     searchQuery.value = query
     mediaList.value = medias
     searchFilters.value = filters
-    console.log('setState', page, query, medias, filters)
   }
   return { searchPage, searchQuery, mediaList, searchFilters, setState }
 })

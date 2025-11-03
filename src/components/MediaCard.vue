@@ -3,6 +3,7 @@ import { useMediaStore } from '@/stores/media'
 import { computed } from 'vue'
 import type { MediaType } from '@/types/Media'
 import ImageWithFallback from './ImageWithFallback.vue'
+import ScoreRing from './ScoreRing.vue'
 
 const props = defineProps<{
   media: MediaType
@@ -20,7 +21,7 @@ const alreadyAdded = computed(() => store.mediaList.some((media) => media.Id ===
 
 <template>
   <div
-    class="card relative w-full h-full overflow-hidden bg-white/70 backdrop-blur-md border border-gray-200/60 shadow-md hover:shadow-xl transition-all duration-300"
+    class="card relative w-full h-full overflow-hidden bg-white/70 backdrop-blur-md border border-gray-200/60 shadow-xs hover:shadow-xl transition-all duration-300"
     v-motion-fade-visible-once
   >
     <!-- Poster wrapper with fixed aspect -->
@@ -39,21 +40,7 @@ const alreadyAdded = computed(() => store.mediaList.some((media) => media.Id ===
 
       <!-- Radial progress placed on the right edge, centered on the seam between poster and body -->
       <div class="absolute left-3 bottom-0 z-20 translate-y-1/2" aria-hidden="true">
-        <div
-          class="radial-progress bg-primary text-primary-content border-primary border-4 font-bold flex items-center justify-center"
-          :style="{
-            '--value': props.media.VoteAverage * 10,
-            '--size': '2rem',
-            '--thickness': '3px',
-          }"
-          :aria-valuenow="props.media.VoteAverage"
-          role="progressbar"
-        >
-          <span class="flex items-baseline text-[0.7em]">
-            {{ props.media.VoteAverage === 0 ? '?' : (props.media.VoteAverage * 10).toFixed(0) }}
-            <span class="text-[0.5em] relative -top-1 ml-0.5">%</span>
-          </span>
-        </div>
+        <ScoreRing :VoteAverage="props.media.VoteAverage" />
       </div>
     </div>
 
@@ -70,14 +57,14 @@ const alreadyAdded = computed(() => store.mediaList.some((media) => media.Id ===
         </h2>
         <time
           class="text-sm text-gray-400"
-          :datetime="new Date(props.media.ReleaseDate).toISOString()"
+          :datetime="new Date(props.media.ReleaseDate === '' ? props.media.FirstAirDate : props.media.ReleaseDate).toISOString()"
         >
           {{
             new Intl.DateTimeFormat('default', {
               year: 'numeric',
               month: 'long',
               day: 'numeric',
-            }).format(new Date(props.media.ReleaseDate))
+            }).format(new Date(props.media.ReleaseDate === '' ? props.media.FirstAirDate : props.media.ReleaseDate))
           }}
         </time>
       </router-link>

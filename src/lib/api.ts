@@ -41,7 +41,7 @@ export const loadMedia = async (
   const responses = await Promise.all(requests)
 
   // If only one type was requested, handle that directly
-  if (filters.onlyMovies) {
+  if (filters.onlyMovies && !filters.onlySeries) {
     const movieSearch = responses[0]
     if (movieSearch.status !== 200) {
       return {
@@ -62,7 +62,7 @@ export const loadMedia = async (
     }
   }
 
-  if (filters.onlySeries) {
+  if (filters.onlySeries && !filters.onlyMovies) {
     const tvSearch = responses[0]
     if (tvSearch.status !== 200) {
       return {
