@@ -36,7 +36,9 @@ const alreadyAdded = computed(() => store.mediaList.some((media) => media.Id ===
           class="w-full h-full object-cover transform transition-transform duration-500 hover:scale-105"
         />
         <!-- Glassy gradient shadow overlay -->
-        <div class="absolute bottom-0 left-0 right-0 h-16 bg-linear-to-t from-white/40 via-white/20 to-transparent backdrop-blur-[0.5px] pointer-events-none"></div>
+        <div
+          class="absolute bottom-0 left-0 right-0 h-16 bg-linear-to-t from-white/40 via-white/20 to-transparent backdrop-blur-[0.5px] pointer-events-none"
+        ></div>
       </router-link>
 
       <!-- Radial progress placed on the right edge, centered on the seam between poster and body -->

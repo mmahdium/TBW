@@ -23,7 +23,7 @@ const imageSource = computed(() => {
 </script>
 
 <template>
-  <figure class="overflow-hidden flex items-center justify-center bg-gray-50">
+  <figure class="overflow-hidden flex items-center justify-center bg-gray-50 aspect-2/3">
     <span v-if="!loaded" class="loading loading-ring loading-lg text-primary"></span>
 
     <div v-else-if="imageLoadFailed" class="flex items-center justify-center">
@@ -44,6 +44,7 @@ const imageSource = computed(() => {
     </div>
 
     <img
+      v-motion-fade-visible-once
       v-show="loaded && !imageLoadFailed"
       :src="imageSource"
       :alt="props.alt"
