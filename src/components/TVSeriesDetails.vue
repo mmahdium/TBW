@@ -1,45 +1,32 @@
 <script setup lang="ts">
-import type { MovieDetailsType } from '@/types/Movie'
-import type { TvSeriesDetailsType } from '@/types/TvSeries'
 import { computed } from 'vue'
 import { useMediaStore } from '@/stores/media'
 import type { MediaType } from '@/types/Media'
 import ImageWithFallback from './ImageWithFallback.vue'
 import MediaTypeBadge from './MediaTypeBadge.vue'
+import type { TvSeriesDetailsType } from '@/types/TvSeries'
 
 const props = defineProps<{
-  type: 'movie' | 'tv'
   media?: MediaType
-  movie?: MovieDetailsType | null
   tvSeries?: TvSeriesDetailsType | null
 }>()
 
 const store = useMediaStore()
 
 const alreadyAdded = computed(() =>
-  props.type === 'movie' && props.movie
-    ? store.mediaList.some((m: MediaType) => m.Id === props.movie!.Id)
-    : props.type === 'tv' && props.tvSeries
-      ? store.mediaList.some((ts: MediaType) => ts.Id === props.tvSeries!.Id)
-      : false,
+  props.tvSeries ? store.mediaList.some((m: MediaType) => m.Id === props.tvSeries!.Id) : false,
 )
 </script>
 
 <template>
-  <!-- Error -->
-  <!-- <ErrorAlert
-    v-if="props.type === 'movie' && props.movie?.Error"
-    :message="props.movie.ErrorMessage"
-  /> -->
-
   <!-- Hero -->
   <div
-    class="flex flex-col lg:flex-row gap-12 items-center max-w-6xl w-full bg-white/70 backdrop-blur-md border border-gray-200/60 shadow-md rounded-xl p-8 transition"
+    class="flex flex-col lg:flex-row gap-12 items-center max-w-6xl w-full bg-white/70 border border-gray-200/60 rounded-xl p-8 transition"
     v-motion-fade-visible-once
   >
     <!-- Poster -->
     <ImageWithFallback
-      :src="type === 'movie' ? props.movie!.PosterPath : props.tvSeries!.PosterPath"
+      :src="props.tvSeries!.PosterPath"
       alt="Poster"
       size="w500"
       class="shrink-0 w-full max-w-sm rounded-lg shadow-lg transform transition-transform duration-500 hover:scale-105"
@@ -48,51 +35,30 @@ const alreadyAdded = computed(() =>
     <!-- Text -->
     <div class="flex-1">
       <h1 class="text-4xl font-bold text-gray-800 mb-2">
-        <template v-if="props.type === 'movie'">
-          {{ props.movie!.Title }}
-          <span class="text-gray-400 text-lg font-normal"
-            >({{ props.movie!.ReleaseDate?.slice(0, 4) }})</span
-          >
-        </template>
-        <template v-else>
-          {{ props.tvSeries!.Name }}
-          <span class="text-gray-400 text-lg font-normal"
-            >({{ props.tvSeries!.FirstAirDate?.slice(0, 4) }})</span
-          >
-        </template>
+        {{ props.tvSeries!.Name }}
+        <span class="text-gray-400 text-lg font-normal"
+          >({{ props.tvSeries!.FirstAirDate?.slice(0, 4) }})</span
+        >
       </h1>
 
-      <p v-if="props.type === 'movie' && props.movie!.Tagline" class="italic text-gray-500 mb-2">
-        {{ props.movie!.Tagline }}
-      </p>
-      <p v-if="props.type === 'tv' && props.tvSeries!.Tagline" class="italic text-gray-500 mb-2">
+      <p v-if="props.tvSeries!.Tagline" class="italic text-gray-500 mb-2">
         {{ props.tvSeries!.Tagline }}
       </p>
 
       <p class="text-gray-600 leading-relaxed mb-6">
-        {{ props.type === 'movie' ? props.movie!.Overview : props.tvSeries!.Overview }}
+        {{ props.tvSeries!.Overview }}
       </p>
 
       <!-- Badges -->
       <div class="flex flex-wrap gap-2 mb-6">
-        <MediaTypeBadge
-          v-for="g in props.type === 'movie' ? props.movie!.Genres : props.tvSeries!.Genres"
-          :key="g.id"
-          :text="g.name"
-        />
-        <MediaTypeBadge
-          v-if="props.type === 'movie'"
-          :text="`Runtime: ${props.movie!.Runtime} min`"
-        />
-        <MediaTypeBadge
-          v-if="props.type === 'tv'"
-          :text="`Seasons: ${props.tvSeries!.NumberOfSeasons}`"
-        />
+        <MediaTypeBadge v-for="g in props.tvSeries!.Genres" :key="g.id" :text="g.name" />
+        <MediaTypeBadge :text="`Seasons: ${props.tvSeries!.NumberOfSeasons}`" />
+        <MediaTypeBadge :text="`Episodes: ${props.tvSeries!.NumberOfEpisodes}`" />
       </div>
 
       <!-- Actions -->
       <div class="card-actions" v-auto-animate>
-        <template v-if="(props.movie && props.media) || (props.tvSeries && props.media)">
+        <template v-if="props.tvSeries && props.media">
           <button
             v-if="!alreadyAdded"
             class="btn px-6 bg-linear-to-r from-gray-100 to-gray-200 border border-gray-300 text-gray-700 hover:from-gray-200 hover:to-gray-300"
@@ -109,12 +75,12 @@ const alreadyAdded = computed(() =>
           </button>
         </template>
 
-        <RouterLink
+        <!-- <RouterLink
           :to="{
             name: 'watch',
             params: {
-              name: props.type === 'movie' ? props.movie!.Title : props.tvSeries!.Name,
-              id: props.type === 'movie' ? props.movie!.Id : props.tvSeries!.Id,
+              name: props.tvSeries!.Name,
+              id: props.tvSeries!.Id,
             },
           }"
         >
@@ -136,7 +102,7 @@ const alreadyAdded = computed(() =>
             <span>Watch</span>
             <span class="badge badge-sm badge-secondary absolute -top-2 -right-2">Beta</span>
           </button>
-        </RouterLink>
+        </RouterLink> -->
       </div>
     </div>
   </div>

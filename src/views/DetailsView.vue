@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import ErrorAlert from '@/components/alerts/ErrorAlert.vue'
-import MediaDetails from '@/components/MediaDetails.vue'
+import MovieDetails from '@/components/MovieDetails.vue'
+import TVSeriesDetails from '@/components/TVSeriesDetails.vue'
 import { getMovieDetails, getSeriesDetails } from '@/lib/api'
 import { mapMovieDetailsToMedia, mapTvSeriesDetailsToMedia } from '@/types/MediaMap'
 import type { MovieDetailsType } from '@/types/Movie'
@@ -57,17 +58,23 @@ onMounted(async () => {
     <ErrorAlert v-if="errorMessage" :message="errorMessage" />
 
     <!-- Loading -->
-    <div v-else-if="isLoading" class="flex justify-center items-center">
+    <!-- Loading -->
+    <div v-else-if="isLoading" class="flex justify-center items-center min-h-screen">
       <span class="loading loading-ring loading-lg text-primary"></span>
     </div>
 
     <!-- Details -->
-    <MediaDetails
-      v-else-if="movieDetails || tvSeriesDetails"
-      :type="route.params.type === 'movie' ? 'movie' : 'tv'"
+    <MovieDetails
+      v-else-if="movieDetails"
       :media="media"
       :movie="movieDetails"
-      :tv-series="tvSeriesDetails"
+      v-motion-fade-visible-once
+    />
+
+    <TVSeriesDetails
+      v-else-if="tvSeriesDetails"
+      :media="media"
+      :tvSeries="tvSeriesDetails"
       v-motion-fade-visible-once
     />
 

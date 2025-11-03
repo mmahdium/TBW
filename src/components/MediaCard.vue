@@ -89,7 +89,10 @@ const alreadyAdded = computed(() => store.mediaList.some((media) => media.Id ===
       <!-- Actions row -->
       <div class="card-actions flex items-center justify-between mt-auto">
         <!-- Type badge -->
-        <span class="badge badge-outline text-xs font-medium px-2 py-1">
+        <span
+          class="badge badge-outline text-xs font-medium px-2 py-1"
+          :class="props.media.Adult ? 'badge-error' : ''"
+        >
           {{ props.media.MediaType === 'movie' ? 'Movie' : 'Show' }}
         </span>
 
