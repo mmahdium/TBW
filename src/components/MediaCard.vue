@@ -24,11 +24,10 @@ const alreadyAdded = computed(() => store.mediaList.some((media) => media.Id ===
     class="card relative w-full h-full overflow-hidden bg-white/70 backdrop-blur-md border border-gray-200/60 shadow-xs hover:shadow-xl transition-all duration-300"
     v-motion-fade-visible-once
   >
-    <!-- Poster wrapper with fixed aspect -->
     <div class="relative w-full">
       <router-link
         :to="{ name: 'details', params: { type: props.media.MediaType, id: props.media.Id } }"
-        class="block w-full aspect-2/3 overflow-hidden bg-gray-100"
+        class="block w-full aspect-2/3 overflow-hidden bg-gray-100 relative"
       >
         <ImageWithFallback
           :src="props.media.PosterPath"
@@ -36,6 +35,8 @@ const alreadyAdded = computed(() => store.mediaList.some((media) => media.Id ===
           size="w300"
           class="w-full h-full object-cover transform transition-transform duration-500 hover:scale-105"
         />
+        <!-- Glassy gradient shadow overlay -->
+        <div class="absolute bottom-0 left-0 right-0 h-16 bg-linear-to-t from-white/40 via-white/20 to-transparent backdrop-blur-[0.5px] pointer-events-none"></div>
       </router-link>
 
       <!-- Radial progress placed on the right edge, centered on the seam between poster and body -->
@@ -58,21 +59,29 @@ const alreadyAdded = computed(() => store.mediaList.some((media) => media.Id ===
         <time
           class="text-sm text-gray-400"
           :datetime="
-            new Date(
-              props.media.ReleaseDate === '' ? props.media.FirstAirDate : props.media.ReleaseDate,
-            ).toISOString()
+            props.media.ReleaseDate === '' && props.media.FirstAirDate === ''
+              ? 'unknown'
+              : new Date(
+                  props.media.ReleaseDate === ''
+                    ? props.media.FirstAirDate
+                    : props.media.ReleaseDate,
+                ).toISOString()
           "
         >
           {{
-            new Intl.DateTimeFormat('default', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            }).format(
-              new Date(
-                props.media.ReleaseDate === '' ? props.media.FirstAirDate : props.media.ReleaseDate,
-              ),
-            )
+            props.media.ReleaseDate === '' && props.media.FirstAirDate === ''
+              ? 'unknown'
+              : new Intl.DateTimeFormat('default', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                }).format(
+                  new Date(
+                    props.media.ReleaseDate === ''
+                      ? props.media.FirstAirDate
+                      : props.media.ReleaseDate,
+                  ),
+                )
           }}
         </time>
       </router-link>
