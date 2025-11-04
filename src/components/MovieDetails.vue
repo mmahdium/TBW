@@ -61,7 +61,7 @@ const alreadyAdded = computed(() =>
           </p>
           <p class="font-semibold text-gray-900">
             Language:
-            <span class="text-gray-600">{{ props.movie!.OriginalLanguage.toUpperCase() }}</span>
+            <span class="text-gray-600">{{ props.movie!.SpokenLanguages[0]?.englishName }}</span>
           </p>
           <p class="font-semibold text-gray-900">
             Release Date:
