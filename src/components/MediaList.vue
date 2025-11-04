@@ -15,6 +15,16 @@ const emit = defineEmits<{
   (e: 'add-media', media: MediaType): void
   (e: 'remove-media', mediaId: number): void
 }>()
+
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY
+  const windowHeight = window.innerHeight
+  const docHeight = document.documentElement.scrollHeight
+  const scrollPercent = (scrollTop + windowHeight) / docHeight
+  if (scrollPercent >= 0.75 && !props.loadingMore && props.isSearch) {
+    emit('loadMore')
+  }
+})
 </script>
 
 <template>
