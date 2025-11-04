@@ -8,7 +8,6 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: process.env.DEPLOY_ENV === 'GH_PAGES' ? '/TBW/' : './',
   plugins: [
     vue(),
     vueDevTools(),

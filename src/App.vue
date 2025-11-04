@@ -6,24 +6,7 @@ import { SpeedInsights } from '@vercel/speed-insights/vue'
 
 <template>
   <SpeedInsights />
-  <NavBar />
+  <NavBar v-if="$route.name !== 'watch'" />
 
   <RouterView />
 </template>
-
-<style scoped>
-.page-enter-active,
-.page-leave-active {
-  transition: all 0.2s ease;
-}
-
-.page-enter-from {
-  opacity: 0;
-  transform: translateX(20px);
-}
-
-.page-leave-to {
-  opacity: 0;
-  transform: translateX(-20px);
-}
-</style>
