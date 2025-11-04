@@ -29,7 +29,7 @@ const alreadyAdded = computed(() =>
       :src="props.movie!.PosterPath"
       alt="Poster"
       size="w500"
-      class="shrink-0 w-full max-w-sm rounded-lg shadow-lg transform transition-transform duration-500 hover:scale-105"
+      class="shrink-0 w-full max-w-sm rounded-lg shadow-lg transform transition-transform duration-500 hover:scale-101"
     />
 
     <!-- Text -->
@@ -45,14 +45,68 @@ const alreadyAdded = computed(() =>
         {{ props.movie!.Tagline }}
       </p>
 
-      <p class="text-gray-600 leading-relaxed mb-6">
+      <p class="text-accent leading-relaxed mb-6">
         {{ props.movie!.Overview }}
       </p>
 
       <!-- Badges -->
       <div class="flex flex-wrap gap-2 mb-6">
         <MediaTypeBadge v-for="g in props.movie!.Genres" :key="g.id" :text="g.name" />
-        <MediaTypeBadge :text="`Runtime: ${props.movie!.Runtime} min`" />
+      </div>
+
+      <div class="card bg-base-100 w-full lg:w-96 shadow-sm mb-6 mt-6 h-">
+        <div class="card-body">
+          <p class="font-semibold text-gray-900">
+            Runtime: <span class="text-gray-600">{{ props.movie!.Runtime }} minutes</span>
+          </p>
+          <p class="font-semibold text-gray-900">
+            Language:
+            <span class="text-gray-600">{{ props.movie!.OriginalLanguage.toUpperCase() }}</span>
+          </p>
+          <p class="font-semibold text-gray-900">
+            Release Date:
+            <time
+              class="text-sm font-semibold text-gray-600"
+              :datetime="
+                props.movie!.ReleaseDate === ''
+                  ? 'unknown'
+                  : new Date(props.movie!.ReleaseDate).toISOString()
+              "
+            >
+              {{
+                props.movie!.ReleaseDate === ''
+                  ? 'unknown'
+                  : new Intl.DateTimeFormat('default', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    }).format(new Date(props.movie!.ReleaseDate))
+              }}
+            </time>
+          </p>
+          <div class="card-actions justify-start mb-6 mt-2 gap-3">
+            <!-- TMDB button -->
+            <a
+              :href="`https://www.themoviedb.org/movie/${props.movie?.Id}`"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-square btn-md bg-accent border-none"
+            >
+              <img src="/logos/tmdb.svg" alt="TMDB" class="m-0.5" />
+            </a>
+
+            <!-- IMDB button -->
+            <a
+              v-if="props.movie?.ImdbId"
+              :href="`https://www.imdb.com/title/${props.movie.ImdbId}`"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-square btn-md bg-[#f5c518] border-none"
+            >
+              <img src="/logos/imdb.svg" alt="IMDB" class="m-0.5" />
+            </a>
+          </div>
+        </div>
       </div>
 
       <!-- Actions -->
