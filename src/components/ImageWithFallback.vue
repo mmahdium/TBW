@@ -18,7 +18,7 @@ const imageSource = computed(() => {
   if (!props.src) {
     return ''
   }
-  return `https://image.tmdb.org/t/p/${props.size}${props.src}`
+  return `https://6909aa3d0001d5d30ff1.fra.appwrite.run/t/p/${props.size}${props.src}` // Image proxy
 })
 </script>
 
