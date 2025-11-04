@@ -54,7 +54,7 @@ const alreadyAdded = computed(() =>
         <MediaTypeBadge v-for="g in props.movie!.Genres" :key="g.id" :text="g.name" />
       </div>
 
-      <div class="card bg-base-100 w-full lg:w-96 shadow-sm mb-6 mt-6 h-">
+      <div class="card bg-base-200 w-full lg:w-96 shadow-sm mb-6 mt-6">
         <div class="card-body">
           <p class="font-semibold text-gray-900">
             Runtime: <span class="text-gray-600">{{ props.movie!.Runtime }} minutes</span>
