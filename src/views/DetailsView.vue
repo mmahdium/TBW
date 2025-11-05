@@ -60,7 +60,7 @@ onMounted(async () => {
     <!-- Loading -->
     <!-- Loading -->
     <div v-else-if="isLoading" class="flex justify-center items-center min-h-screen">
-      <span class="loading loading-ring loading-lg text-primary"></span>
+      <span class="loading loading-ring loading-xl text-primary"></span>
     </div>
 
     <!-- Details -->

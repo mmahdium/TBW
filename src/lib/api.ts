@@ -12,7 +12,7 @@ const instance = axios.create({
   baseURL: 'https://6909aa3d0001d5d30ff1.fra.appwrite.run/3',
   timeout: 6969,
   headers: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
   },
 })
 
