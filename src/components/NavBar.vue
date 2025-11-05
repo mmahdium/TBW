@@ -1,15 +1,15 @@
 <template>
-  <div
-    class="navbar sticky top-0 z-20 bg-white/70 glass border-b border-gray-200/60 shadow-sm transition"
+  <nav
+    class="navbar sticky top-0 z-30 bg-white/70 backdrop-blur-md border-b border-gray-200/60 shadow-sm"
   >
-    <!-- Left -->
+    <!-- Left: Logo + Mobile Menu -->
     <div class="navbar-start">
       <!-- Mobile dropdown -->
-      <div class="dropdown">
-        <div tabindex="0" role="button" class="btn btn-ghost lg:hidden" aria-label="Menu">
+      <div class="dropdown lg:hidden">
+        <label tabindex="0" class="btn btn-ghost p-2" aria-label="Menu">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6 text-gray-600"
+            class="h-6 w-6 text-gray-700"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -18,58 +18,56 @@
               stroke-linecap="round"
               stroke-linejoin="round"
               stroke-width="2"
-              d="M4 6h16M4 12h8m-8 6h16"
+              d="M4 6h16M4 12h16M4 18h16"
             />
           </svg>
-        </div>
+        </label>
         <ul
-          tabindex="-1"
-          class="menu menu-sm dropdown-content mt-3 w-52 p-2 rounded-lg shadow-md bg-white/80 backdrop-blur-md border border-gray-200/60"
+          tabindex="0"
+          class="menu menu-sm dropdown-content mt-3 w-52 rounded-md bg-white/90 backdrop-blur-md shadow-lg border border-gray-200/60"
         >
-          <li><RouterLink class="text-gray-700 hover:text-gray-900" to="/">Home</RouterLink></li>
-          <li>
-            <RouterLink class="text-gray-700 hover:text-gray-900" to="/list">Library</RouterLink>
-          </li>
-          <li><RouterLink class="text-gray-700 hover:text-gray-900" to="/add">Add</RouterLink></li>
+          <li><RouterLink to="/" class="nav-link">Home</RouterLink></li>
+          <li><RouterLink to="/list" class="nav-link">Library</RouterLink></li>
+          <li><RouterLink to="/add" class="nav-link">Add</RouterLink></li>
         </ul>
       </div>
 
       <!-- Logo -->
       <RouterLink
-        class="btn btn-ghost normal-case text-2xl font-bold bg-linear-to-r from-gray-700 to-gray-500 bg-clip-text text-transparent"
         to="/"
+        class="text-2xl font-extrabold tracking-tight bg-linear-to-r from-gray-700 via-indigo-500 to-cyan-400 bg-clip-text text-transparent"
       >
-        To Vue
+        TBW
       </RouterLink>
     </div>
 
-    <!-- Center (desktop menu) -->
+    <!-- Center: Desktop Menu -->
     <div class="navbar-center hidden lg:flex">
-      <ul class="menu menu-horizontal px-1 space-x-4">
-        <li>
-          <RouterLink class="text-gray-700 hover:text-gray-900 transition" to="/">Home</RouterLink>
-        </li>
-        <li>
-          <RouterLink class="text-gray-700 hover:text-gray-900 transition" to="/list"
-            >Library</RouterLink
-          >
-        </li>
-        <li>
-          <RouterLink class="text-gray-700 hover:text-gray-900 transition" to="/add"
-            >Add</RouterLink
-          >
-        </li>
+      <ul class="menu menu-horizontal gap-6">
+        <li><RouterLink to="/" class="nav-link">Home</RouterLink></li>
+        <li><RouterLink to="/list" class="nav-link">Library</RouterLink></li>
+        <li><RouterLink to="/add" class="nav-link">Add</RouterLink></li>
       </ul>
     </div>
 
-    <!-- Right -->
+    <!-- Right: CTA -->
     <div class="navbar-end">
       <RouterLink
-        class="btn px-5 bg-linear-to-r from-gray-100 to-gray-200 border border-gray-300 text-gray-700 hover:from-gray-200 hover:to-gray-300"
         to="/list"
+        class="btn px-5 bg-linear-to-r from-gray-100 to-gray-200 border border-gray-300 text-gray-700 hover:from-gray-200 hover:to-gray-300 hover:text-gray-900 transition"
       >
-        Go to library
+        Go to Library
       </RouterLink>
     </div>
-  </div>
+  </nav>
 </template>
+
+<style scoped>
+@reference "tailwindcss";
+.nav-link {
+  @apply text-gray-700 font-medium transition-colors hover:text-gray-900;
+}
+.router-link-active.nav-link {
+  @apply text-indigo-600 font-semibold;
+}
+</style>
