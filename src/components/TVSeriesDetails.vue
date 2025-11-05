@@ -52,12 +52,19 @@ const alreadyAdded = computed(() =>
       <!-- Badges -->
       <div class="flex flex-wrap gap-2 mb-6">
         <MediaTypeBadge v-for="g in props.tvSeries!.Genres" :key="g.id" :text="g.name" />
-        <MediaTypeBadge :text="`Seasons: ${props.tvSeries!.NumberOfSeasons}`" />
-        <MediaTypeBadge :text="`Episodes: ${props.tvSeries!.NumberOfEpisodes}`" />
       </div>
 
       <div class="card bg-base-200 w-full lg:w-96 shadow-sm mb-6 mt-6">
         <div class="card-body">
+          <p class="font-semibold text-gray-900">
+            Seasons:
+            <span class="text-gray-600">{{ props.tvSeries!.NumberOfSeasons }}</span>
+          </p>
+          <p class="font-semibold text-gray-900">
+            Expisodes:
+            <span class="text-gray-600">{{ props.tvSeries!.NumberOfEpisodes }}</span>
+          </p>
+
           <p class="font-semibold text-gray-900">
             Last Episode:
             <span class="text-gray-600">{{ props.tvSeries!.LastEpisodeToAir?.name }}</span>
