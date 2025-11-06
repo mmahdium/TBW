@@ -122,7 +122,7 @@ watch(filters, () => {
   <div class="container mx-auto px-4 py-12" v-motion-fade-visible-once>
     <!-- Title -->
     <h1
-      class="text-4xl font-extrabold text-center mb-10 bg-linear-to-r from-gray-700 to-gray-500 bg-clip-text text-transparent"
+      class="text-4xl font-extrabold text-center mb-10 bg-gradient-to-r from-base-content to-base-content/70 bg-clip-text text-transparent"
     >
       Add Media
     </h1>
@@ -151,7 +151,7 @@ watch(filters, () => {
     <!-- Empty state -->
     <p
       v-else
-      class="text-center text-gray-500 mt-16 bg-gray-50/60 border border-gray-200 rounded-lg py-12"
+      class="text-center text-base-content/60 mt-16 bg-base-300/60 border border-base-content/20 rounded-lg py-12"
     >
       Search for a movie or TV Serie to add it to your list
     </p>

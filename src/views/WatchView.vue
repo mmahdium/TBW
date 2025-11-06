@@ -9,7 +9,7 @@ const isLoaded = ref(false)
 </script>
 
 <template>
-  <div class="flex flex-col items-center w-full min-h-screen bg-black text-white">
+  <div class="flex flex-col items-center w-full min-h-screen bg-base-100 text-base-content">
     <!-- Title -->
     <h1 class="text-2xl md:text-3xl font-bold my-4">
       {{ mediaName }}
@@ -17,7 +17,7 @@ const isLoaded = ref(false)
 
     <!-- Loading spinner -->
     <div v-if="!isLoaded" class="flex justify-center items-center flex-1 w-full">
-      <span class="loading loading-ring loading-lg text-white"></span>
+      <span class="loading loading-ring loading-xl text-primary"></span>
     </div>
 
     <!-- Video player -->
@@ -32,7 +32,7 @@ const isLoaded = ref(false)
     </div>
 
     <!-- Disclaimer -->
-    <p class="mt-4 text-xs text-gray-400 text-center px-4 max-w-xl">
+    <p class="mt-4 text-xs text-base-content/60 text-center px-4 max-w-xl">
       ⚠️ This player is provided by a <span class="font-semibold">third‑party service</span>. Ads
       and pop‑ups may appear, and I do not control or endorse them.
     </p>

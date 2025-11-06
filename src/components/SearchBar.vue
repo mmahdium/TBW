@@ -15,10 +15,10 @@ function onSubmit() {
 <template>
   <form @submit.prevent="onSubmit" class="flex justify-center mb-3">
     <div
-      class="flex items-center w-full max-w-md bg-white/70 backdrop-blur-md border border-gray-200/60 shadow-sm hover:shadow-md transition rounded-lg overflow-hidden"
+      class="flex items-center w-full max-w-md bg-base-200/70 backdrop-blur-md border border-base-content/20 shadow-sm hover:shadow-md transition rounded-lg overflow-hidden"
     >
       <!-- Icon -->
-      <span class="pl-3 text-gray-400">
+      <span class="pl-3 text-base-content/50">
         <svg
           class="h-5 w-5"
           xmlns="http://www.w3.org/2000/svg"
@@ -41,7 +41,7 @@ function onSubmit() {
         required
         :value="props.modelValue"
         @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)"
-        class="flex-1 px-3 py-2 bg-transparent outline-none text-gray-700 placeholder-gray-400"
+        class="flex-1 px-3 py-2 bg-transparent outline-none text-base-content/70 placeholder-base-content/50"
       />
 
       <!-- Optional button -->

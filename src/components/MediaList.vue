@@ -31,10 +31,10 @@ window.addEventListener('scroll', () => {
   <div>
     <p
       v-if="props.medias.length === 0"
-      class="text-center text-gray-500 py-12 bg-gray-50/60 rounded-lg border border-gray-200"
+      class="text-center text-base-content/60 py-12 bg-base-300/60 rounded-lg border border-base-content/20"
     >
       No media found.<br />
-      <RouterLink to="/add" class="text-gray-700 font-semibold hover:text-gray-900 transition">
+      <RouterLink to="/add" class="text-base-content/70 font-semibold hover:text-base-content transition">
         Add media
       </RouterLink>
     </p>
@@ -62,7 +62,7 @@ window.addEventListener('scroll', () => {
 
     <div v-if="props.isSearch && props.medias.length > 0" class="flex justify-center mt-8">
       <button
-        class="btn px-6 bg-linear-to-r from-gray-100 to-gray-200 border border-gray-300 text-gray-700 hover:from-gray-200 hover:to-gray-300 hover:text-gray-900 disabled:opacity-50"
+        class="btn px-6 bg-gradient-to-r from-base-300 to-base-200 border border-base-content/30 text-base-content hover:from-base-200 hover:to-base-100 hover:text-base-content/90 disabled:opacity-50"
         @click="emit('loadMore')"
         :disabled="props.loadingMore"
       >

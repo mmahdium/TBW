@@ -21,7 +21,7 @@ const alreadyAdded = computed(() =>
 <template>
   <!-- Hero -->
   <div
-    class="flex flex-col lg:flex-row gap-12 items-center max-w-6xl w-full bg-white/70 border border-gray-200/60 rounded-xl p-8 transition"
+    class="flex flex-col lg:flex-row gap-12 items-center max-w-6xl w-full bg-base-200/70 border border-base-content/20 rounded-xl p-8 transition"
     v-motion-fade-visible-once
   >
     <!-- Poster -->
@@ -34,18 +34,18 @@ const alreadyAdded = computed(() =>
 
     <!-- Text -->
     <div class="flex-1">
-      <h1 class="text-4xl font-bold text-gray-800 mb-2">
+      <h1 class="text-4xl font-bold text-base-content/95 mb-2">
         {{ props.movie!.Title }}
-        <span class="text-gray-400 text-lg font-normal"
+        <span class="text-base-content/70 text-lg font-normal"
           >({{ props.movie!.ReleaseDate?.slice(0, 4) }})</span
         >
       </h1>
 
-      <p v-if="props.movie!.Tagline" class="italic text-gray-500 mb-2">
+      <p v-if="props.movie!.Tagline" class="italic text-base-content/65 mb-2">
         {{ props.movie!.Tagline }}
       </p>
 
-      <p class="text-accent leading-relaxed mb-6">
+      <p class="text-base-content leading-relaxed mb-6">
         {{ props.movie!.Overview }}
       </p>
 
@@ -54,19 +54,21 @@ const alreadyAdded = computed(() =>
         <MediaTypeBadge v-for="g in props.movie!.Genres" :key="g.id" :text="g.name" />
       </div>
 
-      <div class="card bg-base-200 w-full lg:w-96 shadow-sm mb-6 mt-6">
+      <div class="card border border-accent bg-base-200 w-full lg:w-96 shadow-sm mb-6 mt-6">
         <div class="card-body">
-          <p class="font-semibold text-gray-900">
-            Runtime: <span class="text-gray-600">{{ props.movie!.Runtime }} minutes</span>
+          <p class="font-semibold text-base-content/90">
+            Runtime: <span class="text-base-content/70">{{ props.movie!.Runtime }} minutes</span>
           </p>
-          <p class="font-semibold text-gray-900">
+          <p class="font-semibold text-base-content/90">
             Language:
-            <span class="text-gray-600">{{ props.movie!.SpokenLanguages[0]?.englishName }}</span>
+            <span class="text-base-content/70">{{
+              props.movie!.SpokenLanguages[0]?.englishName
+            }}</span>
           </p>
-          <p class="font-semibold text-gray-900">
+          <p class="font-semibold text-base-content/90">
             Release Date:
             <time
-              class="text-sm font-semibold text-gray-600"
+              class="text-sm font-semibold text-base-content/70"
               :datetime="
                 props.movie!.ReleaseDate === ''
                   ? 'unknown'
@@ -90,9 +92,9 @@ const alreadyAdded = computed(() =>
               :href="`https://www.themoviedb.org/movie/${props.movie?.Id}`"
               target="_blank"
               rel="noopener noreferrer"
-              class="btn btn-square btn-md bg-accent border-none"
+              class="btn btn-square btn-md bg-base-300 border border-base-content/30"
             >
-              <img src="/logos/tmdb.svg" alt="TMDB" class="m-0.5" />
+              <img src="/logos/tmdb.svg" alt="TMDB" class="h-6 w-6" />
             </a>
 
             <!-- IMDB button -->
@@ -101,9 +103,9 @@ const alreadyAdded = computed(() =>
               :href="`https://www.imdb.com/title/${props.movie.ImdbId}`"
               target="_blank"
               rel="noopener noreferrer"
-              class="btn btn-square btn-md bg-[#f5c518] border-none"
+              class="btn btn-square btn-md bg-[#f5c518] border border-[#f5c518]/30"
             >
-              <img src="/logos/imdb.svg" alt="IMDB" class="m-0.5" />
+              <img src="/logos/imdb.svg" alt="IMDB" class="h-6 w-6" />
             </a>
           </div>
         </div>
@@ -114,7 +116,7 @@ const alreadyAdded = computed(() =>
         <template v-if="props.movie && props.media">
           <button
             v-if="!alreadyAdded"
-            class="btn btn-square bg-linear-to-r from-gray-100 to-gray-200 border border-gray-300 text-gray-700 hover:from-gray-200 hover:to-gray-300"
+            class="btn btn-square bg-gradient-to-r from-base-300 to-base-200 border border-base-content/30 text-base-content hover:from-base-200 hover:to-base-100"
             @click="store.addMedia(props.media)"
           >
             <svg
@@ -134,7 +136,7 @@ const alreadyAdded = computed(() =>
           </button>
           <button
             v-else
-            class="btn btn-square bg-linear-to-r from-red-50 to-red-100 border border-red-200 text-red-600 hover:from-red-100 hover:to-red-200"
+            class="btn btn-square bg-gradient-to-r from-error/10 to-error/20 border border-error/30 text-error hover:from-error/20 hover:to-error/30"
             @click="store.removeMedia(props.media.Id)"
           >
             <svg
@@ -164,7 +166,7 @@ const alreadyAdded = computed(() =>
           }"
         >
           <button
-            class="btn relative flex items-center gap-2 px-6 bg-linear-to-r from-indigo-500 to-violet-500 text-white border-0 shadow-md hover:opacity-90 transition"
+            class="btn relative flex items-center gap-2 px-6 bg-gradient-to-r from-primary to-secondary text-primary-content border-0 shadow-md hover:opacity-90 transition"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

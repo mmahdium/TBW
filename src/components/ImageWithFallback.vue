@@ -23,7 +23,7 @@ const imageSource = computed(() => {
 </script>
 
 <template>
-  <figure class="overflow-hidden flex items-center justify-center bg-gray-50 aspect-2/3">
+  <figure class="overflow-hidden flex items-center justify-center bg-base-300 aspect-2/3">
     <span v-if="!loaded" class="loading loading-ring loading-lg text-primary"></span>
 
     <div v-else-if="imageLoadFailed" class="flex items-center justify-center">
@@ -33,7 +33,7 @@ const imageSource = computed(() => {
         viewBox="0 0 24 24"
         stroke-width="1.5"
         stroke="currentColor"
-        class="w-12 h-12 text-gray-300"
+        class="w-12 h-12 text-base-content/40"
       >
         <path
           stroke-linecap="round"

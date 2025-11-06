@@ -17,7 +17,7 @@ const handleRemoveMedia = (mediaId: number) => {
 <template>
   <div class="container mx-auto px-4 py-12" v-motion-fade-visible-once>
     <h1
-      class="text-4xl font-extrabold text-center mb-10 bg-linear-to-r from-gray-700 to-gray-500 bg-clip-text text-transparent"
+      class="text-4xl font-extrabold text-center mb-10 bg-gradient-to-r from-base-content to-base-content/70 bg-clip-text text-transparent"
     >
       Media Library
     </h1>

@@ -3,12 +3,12 @@
 <template>
   <router-link
     to="/add"
-    class="card relative w-full h-full flex items-center justify-center aspect-2/3 bg-white/40 backdrop-blur-md rounded-lg transition-all duration-300"
+    class="card relative w-full h-full flex items-center justify-center aspect-2/3 bg-base-300/40 backdrop-blur-md rounded-lg transition-all duration-300 hover:bg-base-200/50"
     v-motion-fade-visible-once
   >
     <!-- Plus icon -->
     <div
-      class="flex flex-col items-center justify-center text-gray-400 hover:text-gray-600 transition"
+      class="flex flex-col items-center justify-center text-base-content/50 hover:text-base-content/70 transition"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

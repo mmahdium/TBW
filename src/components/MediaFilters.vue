@@ -50,36 +50,38 @@ watch(
 </script>
 
 <template>
-  <form class="flex gap-2 justify-center mb-8">
-    <label>
+  <form class="flex gap-2 justify-center mb-8 flex-wrap">
+    <label class="btn btn-outline" :class="local.includeAdult ? 'btn-error' : 'btn-ghost'">
       <input
-        class="btn"
-        :class="local.includeAdult ? 'btn-error' : ''"
         type="checkbox"
         :checked="local.includeAdult"
         @change="toggleIncludeAdult"
         aria-label="Adult"
+        class="sr-only"
       />
+      Adult
     </label>
 
-    <label>
+    <label class="btn btn-outline" :class="local.onlyMovies ? 'btn-primary' : 'btn-ghost'">
       <input
-        class="btn"
         type="checkbox"
         :checked="local.onlyMovies"
         @change="toggleOnlyMovies"
         aria-label="Movies"
+        class="sr-only"
       />
+      Movies
     </label>
 
-    <label>
+    <label class="btn btn-outline" :class="local.onlySeries ? 'btn-primary' : 'btn-ghost'">
       <input
-        class="btn"
         type="checkbox"
         :checked="local.onlySeries"
         @change="toggleOnlySeries"
         aria-label="TV Series"
+        class="sr-only"
       />
+      TV Series
     </label>
   </form>
 </template>
