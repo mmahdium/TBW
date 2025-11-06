@@ -33,7 +33,7 @@ const alreadyAdded = computed(() => store.mediaList.some((media) => media.Id ===
           :src="props.media.PosterPath"
           :alt="props.media.Title"
           size="w300"
-          class="w-full h-full object-cover transform transition-transform duration-500 hover:scale-105"
+          class="w-full h-full object-cover transform transition-transform duration-500 hover:scale-101"
         />
         <!-- Glassy gradient shadow overlay -->
         <div
@@ -54,7 +54,7 @@ const alreadyAdded = computed(() => store.mediaList.some((media) => media.Id ===
         class="block"
       >
         <h2
-          class="card-title text-base font-semibold bg-gradient-to-r from-base-content/70 to-base-content/50 bg-clip-text text-transparent break-words"
+          class="card-title text-base font-semibold bg-gradient-to-r from-base-content to-base-content/75 bg-clip-text text-transparent break-words"
         >
           {{ props.media.Title }}
         </h2>

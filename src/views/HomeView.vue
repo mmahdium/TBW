@@ -90,9 +90,9 @@
 .gradient-text {
   background: linear-gradient(
     90deg,
-    oklch(68.628% 0.185 148.958) 0%,
-    /* primary */ oklch(69.776% 0.135 168.327) 50%,
-    /* secondary */ oklch(70.628% 0.119 185.713) 100% /* accent */
+    oklch(77.48% 0.204 60.62) 0%,
+    /* primary */ oklch(45.98% 0.248 305.03) 50%,
+    /* secondary */ oklch(77.48% 0.204 60.62) 100% /* accent */
   );
   -webkit-background-clip: text;
   background-clip: text;

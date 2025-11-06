@@ -34,7 +34,10 @@ window.addEventListener('scroll', () => {
       class="text-center text-base-content/60 py-12 bg-base-300/60 rounded-lg border border-base-content/20"
     >
       No media found.<br />
-      <RouterLink to="/add" class="text-base-content/70 font-semibold hover:text-base-content transition">
+      <RouterLink
+        to="/add"
+        class="text-base-content/70 font-semibold hover:text-base-content transition"
+      >
         Add media
       </RouterLink>
     </p>

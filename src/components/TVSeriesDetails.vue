@@ -87,7 +87,9 @@ const alreadyAdded = computed(() =>
           </p>
           <p class="font-semibold text-base-content/90">
             Language:
-            <span class="text-base-content/70">{{ props.tvSeries!.SpokenLanguages[0]?.englishName }}</span>
+            <span class="text-base-content/70">{{
+              props.tvSeries!.SpokenLanguages[0]?.englishName
+            }}</span>
           </p>
           <p class="font-semibold text-base-content/90">
             First Air Date:
