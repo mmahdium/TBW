@@ -35,7 +35,7 @@
       <!-- Logo -->
       <RouterLink
         to="/"
-        class="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-base-content/70 via-primary to-secondary bg-clip-text text-transparent"
+        class="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-base-content/70 via-primary to-base-content/70 bg-clip-text text-transparent"
       >
         TBW
       </RouterLink>
