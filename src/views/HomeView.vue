@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="relative isolate bg-white px-6 pt-16 lg:px-8">
+  <div class="relative isolate bg-base-100 px-6 pt-16 lg:px-8">
     <!-- Top blurred gradient background -->
     <div
       class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
@@ -42,13 +42,13 @@
         <span class="text-6xl font-extrabold gradient-text"> To Be Watched </span>
       </h1>
 
-      <p class="text-lg text-gray-600 max-w-2xl mx-auto mb-12">
+      <p class="text-lg text-base-content/70 max-w-2xl mx-auto mb-12">
         A simple and beautiful media list app built with Vue&nbsp;3 and Tailwind&nbsp;CSS (daisyUI).
       </p>
 
       <RouterLink
         to="/add"
-        class="btn px-8 py-3 text-lg font-medium bg-linear-to-r from-gray-100 to-gray-200 border border-gray-300 text-gray-700 hover:from-gray-200 hover:to-gray-300 hover:text-gray-900 transition"
+        class="btn px-8 py-3 text-lg font-medium bg-gradient-to-r from-base-300 to-base-200 border border-base-content/30 text-base-content hover:from-base-200 hover:to-base-100 hover:text-base-content/90 transition"
       >
         Get Started
       </RouterLink>
@@ -90,9 +90,9 @@
 .gradient-text {
   background: linear-gradient(
     90deg,
-    #6b7280 0%,
-    /* gray-500 */ #818cf8 50%,
-    /* indigo-400 */ #22d3ee 100% /* cyan-400 */
+    oklch(68.628% 0.185 148.958) 0%,
+    /* primary */ oklch(69.776% 0.135 168.327) 50%,
+    /* secondary */ oklch(70.628% 0.119 185.713) 100% /* accent */
   );
   -webkit-background-clip: text;
   background-clip: text;

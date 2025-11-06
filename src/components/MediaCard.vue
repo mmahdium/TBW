@@ -21,13 +21,13 @@ const alreadyAdded = computed(() => store.mediaList.some((media) => media.Id ===
 
 <template>
   <div
-    class="card relative w-full h-full overflow-hidden bg-white/70 backdrop-blur-md border border-gray-200/60 shadow-xs hover:shadow-xl transition-all duration-300"
+    class="card relative w-full h-full overflow-hidden bg-base-200/70 backdrop-blur-md border border-base-content/20 shadow-xs hover:shadow-xl transition-all duration-300"
     v-motion-fade-visible-once
   >
     <div class="relative w-full">
       <router-link
         :to="{ name: 'details', params: { type: props.media.MediaType, id: props.media.Id } }"
-        class="block w-full aspect-2/3 overflow-hidden bg-gray-100 relative"
+        class="block w-full aspect-2/3 overflow-hidden bg-base-300 relative"
       >
         <ImageWithFallback
           :src="props.media.PosterPath"
@@ -37,7 +37,7 @@ const alreadyAdded = computed(() => store.mediaList.some((media) => media.Id ===
         />
         <!-- Glassy gradient shadow overlay -->
         <div
-          class="absolute bottom-0 left-0 right-0 h-16 bg-linear-to-t from-white/40 via-white/20 to-transparent backdrop-blur-[0.5px] pointer-events-none"
+          class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-base-100/40 via-base-100/20 to-transparent backdrop-blur-[0.5px] pointer-events-none"
         ></div>
       </router-link>
 
@@ -54,12 +54,12 @@ const alreadyAdded = computed(() => store.mediaList.some((media) => media.Id ===
         class="block"
       >
         <h2
-          class="card-title text-base font-semibold bg-linear-to-r from-gray-700 to-gray-500 bg-clip-text text-transparent break-words"
+          class="card-title text-base font-semibold bg-gradient-to-r from-base-content/70 to-base-content/50 bg-clip-text text-transparent break-words"
         >
           {{ props.media.Title }}
         </h2>
         <time
-          class="text-sm text-gray-400"
+          class="text-sm text-base-content/60"
           :datetime="
             props.media.ReleaseDate === '' && props.media.FirstAirDate === ''
               ? 'unknown'
@@ -93,7 +93,7 @@ const alreadyAdded = computed(() => store.mediaList.some((media) => media.Id ===
         <!-- Type badge -->
         <span
           class="badge badge-outline text-xs font-medium px-2 py-1"
-          :class="props.media.Adult ? 'badge-error' : ''"
+          :class="props.media.Adult ? 'badge-error' : 'text-base-content'"
         >
           {{ props.media.MediaType === 'movie' ? 'Movie' : 'Show' }}
         </span>
@@ -103,7 +103,7 @@ const alreadyAdded = computed(() => store.mediaList.some((media) => media.Id ===
           <button
             v-motion-fade-visible-once
             v-if="!alreadyAdded"
-            class="btn btn-circle btn-md px-1.5 bg-linear-to-r from-gray-100 to-gray-200 border-gray-300 text-gray-700 hover:from-gray-200 hover:to-gray-300 hover:text-gray-900 transition"
+            class="btn btn-circle btn-md px-1.5 bg-gradient-to-r from-base-300 to-base-200 border-base-content/30 text-base-content hover:from-base-200 hover:to-base-100 hover:text-base-content/90 transition"
             @click="emit('add-media', props.media)"
           >
             <svg
@@ -124,7 +124,7 @@ const alreadyAdded = computed(() => store.mediaList.some((media) => media.Id ===
           <button
             v-motion-fade-visible-once
             v-else
-            class="btn btn-circle btn-md px-1.5 bg-linear-to-r from-red-50 to-red-100 border border-red-200 text-red-600 hover:from-red-100 hover:to-red-200 hover:text-red-700 transition"
+            class="btn btn-circle btn-md px-1.5 bg-gradient-to-r from-error/10 to-error/20 border border-error/30 text-error hover:from-error/20 hover:to-error/30 hover:text-error-content transition"
             @click="emit('remove-media', props.media.Id)"
           >
             <svg
