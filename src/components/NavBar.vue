@@ -35,7 +35,7 @@
       <!-- Logo -->
       <RouterLink
         to="/"
-        class="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-base-content/70 via-primary to-base-content/70 bg-clip-text text-transparent"
+        class="text-2xl font-extrabold tracking-tight bg-linear-to-r from-base-content/70 via-primary to-base-content/70 bg-clip-text text-transparent"
       >
         TBW
       </RouterLink>
@@ -54,7 +54,7 @@
     <div class="navbar-end">
       <RouterLink
         to="/list"
-        class="btn px-5 bg-gradient-to-r from-base-300 to-base-200 border border-base-content/30 text-base-content hover:from-base-200 hover:to-base-100 hover:text-base-content/90 transition"
+        class="btn px-5 bg-linear-to-r from-base-300 to-base-200 border border-base-content/30 text-base-content hover:from-base-200 hover:to-base-100 hover:text-base-content/90 transition"
       >
         Go to Library
       </RouterLink>

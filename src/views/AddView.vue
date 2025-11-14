@@ -150,7 +150,7 @@ watch(filters, () => {
 
     <!-- Empty state -->
     <p
-      v-else
+      v-else-if="!seachError"
       class="text-center text-base-content/60 mt-16 bg-base-300/60 border border-base-content/20 rounded-lg py-12"
     >
       Search for a movie or TV Serie to add it to your list
